@@ -35,9 +35,9 @@ export class HighlightTextDirective implements OnChanges {
 
     // Loop through each <td> element and highlight the matched text
     tdElements.forEach((td: HTMLElement) => {
-      // Ensure that the td has text content before processing
+      // Makes sure that the td has data and is not empty
       if (td.textContent) {
-        // Create the regular expression to handle spaces and empty search text
+        // Regular expression to handle spaces and empty search text
         const escapedSearchText = searchText.replace(
           /[.*+\-?^${}()|[\]\\]/g,
           '\\$&'
@@ -46,7 +46,7 @@ export class HighlightTextDirective implements OnChanges {
           `(${escapedSearchText.split(/\s+/).join('|')})`,
           'gi'
         );
-
+        // replaces the text with highlighted span tag
         const innerHTML = td.innerHTML;
         td.innerHTML = innerHTML.replace(
           regexp,
@@ -55,11 +55,12 @@ export class HighlightTextDirective implements OnChanges {
       }
     });
   }
-
   private restoreOriginalContent(): void {
     // Restore the original content of the <td> elements
     const tdElements = this.el.nativeElement.querySelectorAll('td');
     tdElements.forEach((td: HTMLElement) => {
+      //replaces the span tag with original text that was highlighted
+      //.*? is called greedy approach as it checks every single character and exactly matches
       const innerHTML = td.innerHTML;
       td.innerHTML = innerHTML.replace(
         /<span class="highlighted">(.*?)<\/span>/gi,

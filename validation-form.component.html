@@ -1,0 +1,209 @@
+<div class="container">
+  <form [formGroup]="InfoForm" (ngSubmit)="SaveInfo()">
+    <div>
+      <h1 style="font-family: 'Times New Roman', Times, serif">Input Form</h1>
+      <input
+        type="text"
+        formControlName="first_name"
+        placeholder="Enter First Name"
+        class="form-input-decoration"
+        style="margin-bottom: 12px"
+        class="form-control"
+        width="100px"
+      />
+    </div>
+
+    <!-- 
+        <span *ngIf="first_name?.touched && first_name.errors?.['required']" class="error">This field is required</span>
+        <span *ngIf="(first_name?.touched || first_name?.dirty) && first_name.errors?.['pattern']" class="error">Name must contain alphabets only</span> 
+        <span *ngIf="(first_name?.touched || first_name?.dirty) && first_name.errors?.['minlength']" class="error">Name must be at least 3 characters long</span>
+        <span *ngIf="(first_name?.touched || first_name?.dirty) && first_name.errors?.['maxlength']" class="error">Name must be at max 16 characters long</span>
+        -->
+
+    <!-- InfoForm.controls['first_name']?.['required']" -->
+
+    <ng-container *ngIf="first_name?.touched || first_name?.dirty">
+      <ng-container *ngIf="first_name.errors?.['required']; else patternError">
+        <span class="error">This field is required</span>
+      </ng-container>
+      <ng-template #patternError>
+        <ng-container
+          *ngIf="first_name.errors?.['pattern']; else minlengthError"
+        >
+          <span class="error">Name must contain alphabets only</span>
+        </ng-container>
+      </ng-template>
+      <ng-template #minlengthError>
+        <ng-container
+          *ngIf="first_name.errors?.['minlength']; else maxlengthError"
+        >
+          <span class="error">Name must be at least 3 characters long</span>
+        </ng-container>
+      </ng-template>
+      <ng-template #maxlengthError>
+        <ng-container *ngIf="first_name.errors?.['maxlength']">
+          <span class="error">Name must be at max 16 characters long</span>
+        </ng-container>
+      </ng-template>
+    </ng-container>
+
+    <div>
+      <input
+        type="text"
+        formControlName="last_name"
+        placeholder="Enter Last Name"
+        class="form-input-decoration"
+        class="form-input-decoration"
+        style="margin-bottom: 12px"
+        class="form-control"
+        width="100px"
+      />
+    </div>
+
+    <!-- 
+        <span *ngIf="last_name?.touched && last_name.errors?.['required']" class="error">This field is required</span> 
+        <span *ngIf="(last_name?.touched || last_name?.dirty) && last_name.errors?.['pattern']" class="error">Name must contain alphabets only</span>
+        <span *ngIf="(last_name?.touched || last_name?.dirty) && last_name.errors?.['minlength']" class="error">Name must be at least 3 characters long</span>
+        <span *ngIf="(last_name?.touched || last_name?.dirty) && last_name.errors?.['maxlength']" class="error">Name must be at max 16 characters long</span>
+        -->
+
+    <ng-container *ngIf="last_name?.touched || last_name.dirty">
+      <ng-container *ngIf="last_name.errors?.['required']; else patternError">
+        <span class="error">This field is required</span>
+      </ng-container>
+      <ng-template #patternError>
+        <ng-container
+          *ngIf="last_name.errors?.['pattern']; else minlengthError"
+        >
+          <span class="error">Name must contain alphabets only</span>
+        </ng-container>
+      </ng-template>
+      <ng-template #minlengthError>
+        <ng-container
+          *ngIf="last_name.errors?.['minlength']; else maxlengthError"
+        >
+          <span class="error">Name must be at least 3 characters long</span>
+        </ng-container>
+      </ng-template>
+      <ng-template #maxlengthError>
+        <ng-container *ngIf="last_name.errors?.['maxlength']">
+          <span class="error">Name must be at max 16 characters long</span>
+        </ng-container>
+      </ng-template>
+    </ng-container>
+
+    <div>
+      <input
+        type="email"
+        formControlName="email"
+        placeholder="Enter Email"
+        class="form-input-decoration"
+        class="form-input-decoration"
+        style="margin-bottom: 12px"
+        class="form-control"
+        width="100px"
+      />
+    </div>
+
+    <span *ngIf="email?.touched && email.errors?.['required']" class="error"
+      >This field is required</span
+    >
+    <span
+      *ngIf="(email?.touched || email?.dirty) && email.errors?.['email']"
+      class="error"
+      >Email format is xyz@anyMail.com</span
+    >
+
+    <div>
+      <input
+        type="password"
+        formControlName="password"
+        placeholder="Enter Password"
+        class="form-input-decoration"
+        #passwordInput
+        (input)="checkPasswordStrength(passwordInput.value)"
+        style="margin-bottom: 12px"
+        class="form-input-decoration"
+        class="form-control"
+        width="100px"
+      />
+    </div>
+
+    <!-- 
+        <span *ngIf="password?.touched && password.errors?.['required']" class="error">This field is required</span>
+        <span *ngIf="(password?.touched || password?.dirty) && password.errors?.['minlength']" class="error">Password must be at least 8 characters long</span>
+        <span *ngIf="password?.dirty && password?.errors?.['passwordStrength'] === 'Weak'" class="error">Password is too weak.</span>
+        <span *ngIf="password?.dirty && password?.errors?.['passwordStrength'] === 'Medium'" class="error">Password is of medium strength.</span>
+        <span *ngIf="password?.dirty && password?.errors?.['passwordStrength'] === 'Strong'" class="error">Password is strong.</span> 
+        -->
+
+    <ng-container *ngIf="password?.touched || password?.dirty">
+      <ng-container *ngIf="password.errors?.['required']; else minlengthError">
+        <span class="error">This field is required</span>
+      </ng-container>
+      <ng-template #minlengthError>
+        <ng-container
+          *ngIf="password.errors?.['minlength']; else checkPasswordStrength"
+        >
+          <span class="error">Password must be at least 8 characters long</span>
+        </ng-container>
+      </ng-template>
+      <ng-template #checkPasswordStrength>
+        <!-- <span *ngIf="password?.dirty && password?.errors?.['passwordStrength'] === 'Weak'"  class="error">Password is too weak.</span>
+                <span *ngIf="password?.dirty && password?.errors?.['passwordStrength'] === 'Medium'" class="error">Password is of medium strength.</span>
+                <span *ngIf="password?.dirty && password?.errors?.['passwordStrength'] === 'Strong'" class="error">Password is strong.</span>  -->
+        <ng-container
+          *ngIf="
+            InfoForm.get('password')?.touched || InfoForm.get('password')?.dirty
+          "
+        >
+          <span class="error" *ngIf="passwordStrength === 'Weak'"
+            >Password is too weak.</span
+          >
+          <span class="error" *ngIf="passwordStrength === 'Medium'"
+            >Password is of medium strength.</span
+          >
+          <span class="error" *ngIf="passwordStrength === 'Strong'"
+            >Password is strong.</span
+          >
+        </ng-container>
+      </ng-template>
+    </ng-container>
+
+    <div>
+      <input
+        type="password"
+        formControlName="confirmPassword"
+        placeholder="Confirm Password"
+        class="form-input-decoration"
+        style="margin-bottom: 12px"
+        class="form-input-decoration"
+        class="form-control"
+        width="100px"
+      />
+    </div>
+
+    <!-- <span *ngIf="confirmPassword?.touched && confirmPassword.errors?.['required']" class="error">This field is required</span> 
+        <span *ngIf="(confirmPassword?.touched || confirmPassword?.dirty) && InfoForm.hasError('passwordNotMatched')" class="error">confirm password not same</span> -->
+
+    <ng-container
+      *ngIf="confirmPassword?.touched && confirmPassword.errors?.['required']; else passwordMatchError"
+    >
+      <span class="error">This field is required</span>
+    </ng-container>
+    <ng-template #passwordMatchError>
+      <span
+        *ngIf="
+          (confirmPassword?.touched || confirmPassword?.dirty) &&
+          InfoForm.hasError('passwordNotMatched')
+        "
+        class="error"
+        >Confirm password does not match</span
+      >
+    </ng-template>
+    <br /><br />
+    <button [disabled]="InfoForm.invalid" style="width: 150px; padding: 10px">
+      Save
+    </button>
+  </form>
+</div>

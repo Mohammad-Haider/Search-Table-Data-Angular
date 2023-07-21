@@ -1,0 +1,14 @@
+.error {
+  color: red;
+}
+
+.container {
+  float: left;
+  border-style: solid;
+  border-radius: 2px red;
+  padding: 25px;
+  margin-bottom: 15px;
+  margin-right: 5%;
+  max-width: 25%;
+  background-color: antiquewhite;
+}
