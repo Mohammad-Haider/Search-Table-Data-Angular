@@ -5,13 +5,15 @@
     font-size: 60px;
     max-width: fit-content;
     padding: 15px;
-    margin-left: 22%;
+    margin-left: auto;
+    margin-right: auto;
   "
 >
   Welcome to Search HomePage
 </h1>
+<app-validation-form></app-validation-form>
 
-<div class="col-lg-3" style="margin-left: 35%; margin-top: 20px">
+<div class="col-lg-3" style="margin-top: 20px; margin-left: 60%">
   <input
     class="form-control"
     type="text"
@@ -22,14 +24,27 @@
 </div>
 
 <table appHighlightText highlightColor="yellow" [highlightText]="search_text">
-  <tr>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Email</th>
-  </tr>
-  <tr *ngFor="let user of users | searchText : search_text">
-    <td>{{ user.first_name }}</td>
-    <td>{{ user.last_name }}</td>
-    <td>{{ user.email }}</td>
-  </tr>
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let user of users
+          | searchText : search_text
+          | paginate : { itemsPerPage: 10, currentPage: page_number }
+      "
+    >
+      <td>{{ user.first_name }}</td>
+      <td>{{ user.last_name }}</td>
+      <td>{{ user.email }}</td>
+    </tr>
+    <pagination-controls
+      (pageChange)="page_number = $event"
+    ></pagination-controls>
+  </tbody>
 </table>

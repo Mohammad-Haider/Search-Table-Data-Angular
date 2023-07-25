@@ -1,9 +1,10 @@
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 75%;
-  margin-left: 10%;
+  width: 50%;
+  /* margin-left: 10%; */
   margin-top: 1%;
+  float: right;
   margin-bottom: 5%;
 }
 
